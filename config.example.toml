@@ -1,0 +1,26 @@
+# NVIDIA NIM 网关配置示例
+# 复制为 config.toml 后按需修改（config.toml 含密码，已被 .gitignore 忽略）
+
+# 管理面板密码（HTTP Basic，用户名固定 admin）
+admin_password = "admin123"
+
+# 监听端口（python main.py 时生效；uvicorn 命令行以 --port 为准）
+listen_port = 5010
+
+# KEY 触发限流后的冷却秒数
+cooldown_seconds = 60
+
+# 上游 NIM API 地址
+upstream_base_url = "https://integrate.api.nvidia.com/v1"
+
+# 是否定时检测所有启用模型
+model_check_enabled = false
+
+# 定时模型检测间隔（分钟）
+model_check_interval_minutes = 60
+
+# 编辑器系统预设策略：passthrough / prepend / replace
+system_prompt_mode = "passthrough"
+
+# 网关注入的系统提示词，留空表示不注入
+system_prompt = ""

@@ -1,0 +1,26 @@
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nvidia-nim-gateway:local
+    container_name: nvidia-nim-gateway
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${NIM_GATEWAY_PORT:-5010}:5010"
+    environment:
+      NIM_GATEWAY_CONFIG: /config/config.toml
+      NIM_GATEWAY_DATA_DIR: /data
+      NIM_GATEWAY_ADMIN_PASSWORD: ${NIM_GATEWAY_ADMIN_PASSWORD:-admin123}
+      NIM_GATEWAY_UPSTREAM_BASE_URL: ${NIM_GATEWAY_UPSTREAM_BASE_URL:-https://integrate.api.nvidia.com/v1}
+      NIM_GATEWAY_SYSTEM_PROMPT_MODE: ${NIM_GATEWAY_SYSTEM_PROMPT_MODE:-passthrough}
+      NIM_GATEWAY_SYSTEM_PROMPT: ${NIM_GATEWAY_SYSTEM_PROMPT:-}
+    volumes:
+      - gateway_config:/config
+      - gateway_data:/data
+    stop_grace_period: 30s
+
+volumes:
+  gateway_config:
+  gateway_data:
